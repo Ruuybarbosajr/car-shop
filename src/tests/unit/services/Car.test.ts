@@ -28,6 +28,7 @@ describe('Testa camada service de Car', () => {
 
   describe('Em caso de falha', () => {
     it('Deve retornar um error com status 400', async () => {
+
       const objWithOutModel = {
         "doorsQty": 4,
         "seatsQty": 5,
@@ -36,11 +37,13 @@ describe('Testa camada service de Car', () => {
         "color": "Prata",
         "buyValue": 30,
       }
+
       try {
         await carService.create(objWithOutModel);
       } catch (error: any) {
         expect(error.status).to.be.equal(400)
       }
+
     });
   });
 
