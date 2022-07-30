@@ -11,9 +11,7 @@ describe('Testa camada model de Car', () => {
   const carModel = new CarModel();
 
   before(async () => {
-    sinon.stub(Model, 'create')
-    .onCall(0)
-    .resolves(createdCarWithId);
+    sinon.stub(Model, 'create').resolves(createdCarWithId);
   });
 
   after(()=>{
