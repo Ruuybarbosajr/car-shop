@@ -10,12 +10,11 @@ export default class implements IService<ICar> {
   }
 
   // async update(_id: string, obj: ICar): Promise<ICar | null> {
-
   // }
 
-  // async read(): Promise<ICar[]> {
-      
-  // }
+  async read(): Promise<ICar[]> {
+    return this._model.read();
+  }
 
   // async readOne(_id: string): Promise<ICar | null> {
       

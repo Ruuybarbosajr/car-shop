@@ -25,4 +25,13 @@ export default class {
       next(error);
     }
   }
+
+  async read(_req: Request, res: Response, next: NextFunction) {
+    try {
+      const cars = await this._service.read();
+      return res.status(200).json(cars);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
