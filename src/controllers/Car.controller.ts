@@ -34,4 +34,14 @@ export default class {
       next(error);
     }
   }
+
+  async readOne(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const car = await this._service.readOne(id);
+      return res.status(200).json(car);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

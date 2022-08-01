@@ -3,6 +3,7 @@ import CarModel from '../models/Car.model';
 import CarService from '../services/Car.service';
 import CarController from '../controllers/Car.controller';
 import validateBodyCar from '../middleware/validateBodyCar';
+import validIdMongo from '../middleware/validateIdCar';
 
 const router = express.Router();
 
@@ -14,6 +15,12 @@ router.post(
   '/',
   validateBodyCar,
   (req, res, next) => controller.create(req, res, next),
+);
+
+router.get(
+  '/:id',
+  validIdMongo,
+  (req, res, next) => controller.readOne(req, res, next),
 );
 
 router.get(
