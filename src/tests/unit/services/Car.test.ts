@@ -2,49 +2,69 @@
 import * as sinon from 'sinon';
 import chai from 'chai';
 import CarModel from '../../../models/Car.model';
-import { createdCar, createdCarWithId } from '../../mocks/mockCar'
+import { createdCar, createdCarWithId, readCars } from '../../mocks/mockCar'
 import CarService from '../../../services/Car.service';
 const { expect } = chai;
 
 describe('Testa camada service de Car', () => {
+  describe('Rota POST /cars', () => {
+    const carModel = new CarModel()
+    const carService = new CarService(carModel);
 
-  const carModel = new CarModel()
-  const carService = new CarService(carModel);
+    before(async () => {
+      sinon.stub(carModel, 'create').resolves(createdCarWithId);
+    });
 
-  before(async () => {
-    sinon.stub(carModel, 'create').resolves(createdCarWithId);
-  });
+    after(()=>{
+      sinon.restore();
+    });
 
-  after(()=>{
-    sinon.restore();
-  })
+    describe('Em caso de sucesso', () => {
+      it('Deve retornar um objeto', async () => {
+        const newCar = await carService.create(createdCar);
+        expect(newCar).to.eql(createdCarWithId)
+      });
+    });
 
-  describe('Em caso de sucesso', () => {
-    it('Deve retornar um objeto', async () => {
-      const newCar = await carService.create(createdCar);
-      expect(newCar).to.eql(createdCarWithId)
+    describe('Em caso de falha', () => {
+      it('Deve retornar um error com status 400', async () => {
+
+        const objWithOutModel = {
+          "doorsQty": 4,
+          "seatsQty": 5,
+          "model": "",
+          "year": 2003,
+          "color": "Prata",
+          "buyValue": 30,
+        }
+
+        try {
+          await carService.create(objWithOutModel);
+        } catch (error: any) {
+          expect(error.status).to.be.equal(400)
+        }
+
+      });
     });
   });
 
-  describe('Em caso de falha', () => {
-    it('Deve retornar um error com status 400', async () => {
+  describe('Rota GET /cars', () => {
+    const carModel = new CarModel()
+    const carService = new CarService(carModel);
 
-      const objWithOutModel = {
-        "doorsQty": 4,
-        "seatsQty": 5,
-        "model": "",
-        "year": 2003,
-        "color": "Prata",
-        "buyValue": 30,
-      }
+    before(async () => {
+      sinon.stub(carModel, 'read').resolves(readCars);
+    });
 
-      try {
-        await carService.create(objWithOutModel);
-      } catch (error: any) {
-        expect(error.status).to.be.equal(400)
-      }
+    after(()=>{
+      sinon.restore();
+    });
 
+    describe('Em caso de sucesso', () => {
+      it('Deve retornar um objeto', async () => {
+        const cars = await carService.read();
+        expect(cars).to.eql(readCars)
+      });
     });
   });
-
 });
