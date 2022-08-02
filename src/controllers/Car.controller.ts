@@ -34,7 +34,7 @@ export default class {
     return res.status(200).json(car);
   }
 
-  async updated(req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     const {
       buyValue,
       color,

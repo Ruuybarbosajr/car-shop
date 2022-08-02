@@ -27,6 +27,5 @@ export default class implements IService<ICar> {
   }
 
   // async delete(_id: string): Promise<ICar | null> {
-      
   // }
 }

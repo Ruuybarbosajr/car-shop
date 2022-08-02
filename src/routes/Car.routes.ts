@@ -14,25 +14,25 @@ const controller = new CarController(service);
 router.post(
   '/',
   validateBodyCar,
-  (req, res, next) => controller.create(req, res, next),
+  (req, res) => controller.create(req, res),
 );
 
 router.get(
   '/:id',
   validIdMongo,
-  (req, res, next) => controller.readOne(req, res, next),
+  (req, res) => controller.readOne(req, res),
 );
 
 router.get(
   '/',
-  (req, res, next) => controller.read(req, res, next),
+  (req, res) => controller.read(req, res),
 );
 
 router.put(
   '/:id',
   validIdMongo,
   validateBodyCar,
-  (req, res, next) => controller.updated(req, res, next),
+  (req, res) => controller.update(req, res),
 );
 
 export default router;

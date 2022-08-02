@@ -9,7 +9,7 @@ export const createdCar: ICar = {
   "buyValue": 30,
 }
 
-export const createdCarWithId: ICar & { _id: string, __v: number } = {
+export const createdCarWithId: ICar & { _id: string } = {
   "doorsQty": 4,
   "seatsQty": 5,
   "model": "Marea",
@@ -17,10 +17,9 @@ export const createdCarWithId: ICar & { _id: string, __v: number } = {
   "color": "Prata",
   "buyValue": 30,
   "_id": "62e5657e8051d02a82a20880",
-  "__v": 0
 }
 
-export const readCars: (ICar & { _id: string, __v: number })[] = [{
+export const readCars: (ICar & { _id: string })[] = [{
   "doorsQty": 4,
 	"seatsQty": 5,
 	"model": "Marea",
@@ -28,10 +27,9 @@ export const readCars: (ICar & { _id: string, __v: number })[] = [{
 	"color": "Prata",
 	"buyValue": 30,
 	"_id": "62e5657e8051d02a82a20880",
-	"__v": 0
 }]
 
-export const readOneCar: ICar & { _id: string, __v: number } = {
+export const readOneCar: ICar & { _id: string } = {
   "doorsQty": 4,
 	"seatsQty": 5,
 	"model": "Marea",
@@ -39,5 +37,23 @@ export const readOneCar: ICar & { _id: string, __v: number } = {
 	"color": "Prata",
 	"buyValue": 30,
 	"_id": "62e5657e8051d02a82a20880",
-	"__v": 0
+}
+
+export const updatedCar: ICar & { _id: string } = {
+  "doorsQty": 4,
+	"seatsQty": 5,
+	"model": "Marea",
+	"year": 2003,
+	"color": "Prata",
+	"buyValue": 50,
+	"_id": "62e5657e8051d02a82a20880",
+}
+
+export const updateCar: ICar = {
+  "doorsQty": 4,
+	"seatsQty": 5,
+	"model": "Marea",
+	"year": 2003,
+	"color": "Prata",
+	"buyValue": 50,
 }

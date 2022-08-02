@@ -2,7 +2,14 @@
 import Sinon, * as sinon from 'sinon';
 import chai from 'chai';
 import { Request, Response } from 'express';
-import {  createdCarWithId, createdCar, readCars, readOneCar } from '../../mocks/mockCar';
+import {
+  createdCarWithId,
+  createdCar,
+  readCars,
+  readOneCar,
+  updateCar,
+  updatedCar
+} from '../../mocks/mockCar';
 import CarModel from '../../../models/Car.model';
 import CarService from '../../../services/Car.service';
 import CarController from '../../../controllers/Car.controller';
@@ -83,6 +90,33 @@ describe('Testa camada controller de Car', () => {
     describe('Em caso de sucesso', () => {
       it('Deve retornar uma resposta com status 200', async () => {
         await carController.readOne(req, res);
+        expect((res.status as Sinon.SinonStub).calledWith(200)).to.be.true;
+      });
+    });
+  });
+
+  describe('Rota PUT /cars/:id', () => {
+    const carModel = new CarModel();
+    const carService = new CarService(carModel);
+    const carController = new CarController(carService);
+
+    const res = {} as Response;
+    const req = { body: updateCar } as Request;
+    
+    before(async () => {
+      req.params = { id: updatedCar._id };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns(updatedCar);
+      sinon.stub(carService, 'update').resolves(updatedCar);
+    });
+
+    after(()=>{
+      sinon.restore();
+    });
+
+    describe('Em caso de sucesso', () => {
+      it('Deve retornar uma resposta com status 200', async () => {
+        await carController.update(req, res);
         expect((res.status as Sinon.SinonStub).calledWith(200)).to.be.true;
       });
     });

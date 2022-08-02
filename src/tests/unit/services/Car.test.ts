@@ -2,7 +2,14 @@
 import * as sinon from 'sinon';
 import chai from 'chai';
 import CarModel from '../../../models/Car.model';
-import { createdCar, createdCarWithId, readCars, readOneCar } from '../../mocks/mockCar'
+import {
+  createdCar,
+  createdCarWithId,
+  readCars,
+  readOneCar,
+  updateCar,
+  updatedCar
+} from '../../mocks/mockCar'
 import CarService from '../../../services/Car.service';
 const { expect } = chai;
 
@@ -84,6 +91,26 @@ describe('Testa camada service de Car', () => {
       it('Deve retornar um objeto', async () => {
         const car = await carService.readOne(readOneCar._id);
         expect(car).to.eql(readOneCar);
+      });
+    });
+  });
+
+  describe('Rota PUT /cars/:id', () => {
+    const carModel = new CarModel();
+    const carService = new CarService(carModel);
+
+    before(async () => {
+      sinon.stub(carModel, 'update').resolves(updatedCar);
+    });
+
+    after(()=>{
+      sinon.restore();
+    });
+
+    describe('Em caso de sucesso', () => {
+      it('Deve retornar um objeto', async () => {
+        const car = await carService.update(updatedCar._id, updateCar);
+        expect(car).to.eql(updatedCar);
       });
     });
   });
