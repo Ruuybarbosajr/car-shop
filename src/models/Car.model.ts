@@ -10,7 +10,7 @@ const SchemaCar = new Schema<ICar>({
   year: Number,
   color: String,
   buyValue: Number,
-});
+}, { versionKey: false });
 
 export default class extends MongoModel<ICar> {
   constructor(model = mongooseCreateModel('Cars', SchemaCar)) {

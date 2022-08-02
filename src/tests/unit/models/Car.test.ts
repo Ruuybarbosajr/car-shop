@@ -2,7 +2,7 @@
 import * as sinon from 'sinon';
 import chai from 'chai';
 import { Model } from 'mongoose';
-import { createdCar, createdCarWithId, readCars } from '../../mocks/mockCar'
+import { createdCar, createdCarWithId, readCars, readOneCar } from '../../mocks/mockCar'
 import CarModel from '../../../models/Car.model';
 const { expect } = chai;
 
@@ -32,16 +32,36 @@ describe('Testa camada model de Car', () => {
     before(async () => {
       sinon.stub(Model, 'find').resolves(readCars);
     });
-  
+
     after(()=>{
       sinon.restore();
     })
 
     describe('Em caso de sucesso', () => {
-      it('Deve criar e retornar um objeto', async () => {
+      it('Deve criar e retornar um array com todos os cars', async () => {
         const cars = await carModel.read()
         expect(cars).to.be.eql(readCars);
       });
     });
+  });
+
+  describe('Rota GET /cars/:id', () => {
+    const carModel = new CarModel();
+
+    before(async () => {
+      sinon.stub(Model, 'findById').resolves(readOneCar);
+    });
+
+    after(()=>{
+      sinon.restore();
+    });
+
+    describe('Em caso de sucesso', () => {
+      it('Deve criar e retornar um array com todos os cars', async () => {
+        const car = await carModel.readOne(readOneCar._id);
+        expect(car).to.be.eql(readOneCar);
+      });
+    });
+
   });
 });

@@ -1,7 +1,7 @@
 // template para criação dos testes de cobertura da camada de controller
 import Sinon, * as sinon from 'sinon';
 import chai from 'chai';
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import {  createdCarWithId, createdCar, readCars, readOneCar } from '../../mocks/mockCar';
 import CarModel from '../../../models/Car.model';
 import CarService from '../../../services/Car.service';
@@ -16,7 +16,6 @@ describe('Testa camada controller de Car', () => {
 
     const res = {} as Response;
     const req = { body: createdCar } as Request;
-    const next = (() => {}) as NextFunction;
 
     before(async () => {
       res.status = sinon.stub().returns(res);
@@ -30,20 +29,8 @@ describe('Testa camada controller de Car', () => {
 
     describe('Em caso de sucesso', () => {
       it('Deve retornar uma resposta com status 201', async () => {
-        await carController.create(req, res, next);
+        await carController.create(req, res);
         expect((res.status as Sinon.SinonStub).calledWith(201)).to.be.true;
-      });
-    });
-
-    describe('Em caso de falha', () => {
-      it('A função next deve ser chamada com um objeto de error', async () => {
-
-        try {
-          await carController.create(req, res, next);
-        } catch (error) {
-          expect((next as Sinon.SinonStub).calledWith(error)).to.be.true;
-        }
-
       });
     });
   });
@@ -55,7 +42,6 @@ describe('Testa camada controller de Car', () => {
 
     const res = {} as Response;
     const req = {} as Request;
-    const next = (() => {}) as NextFunction;
 
     before(async () => {
       res.status = sinon.stub().returns(res);
@@ -69,7 +55,7 @@ describe('Testa camada controller de Car', () => {
 
     describe('Em caso de sucesso', () => {
       it('Deve retornar uma resposta com status 200', async () => {
-        await carController.read(req, res, next);
+        await carController.read(req, res);
         expect((res.status as Sinon.SinonStub).calledWith(200)).to.be.true;
       });
     });
@@ -82,7 +68,6 @@ describe('Testa camada controller de Car', () => {
 
     const res = {} as Response;
     const req = {} as Request;
-    const next = (() => {}) as NextFunction;
     
     before(async () => {
       req.params = { id: readOneCar._id };
@@ -97,7 +82,7 @@ describe('Testa camada controller de Car', () => {
 
     describe('Em caso de sucesso', () => {
       it('Deve retornar uma resposta com status 200', async () => {
-        await carController.readOne(req, res, next);
+        await carController.readOne(req, res);
         expect((res.status as Sinon.SinonStub).calledWith(200)).to.be.true;
       });
     });

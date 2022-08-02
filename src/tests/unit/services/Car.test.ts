@@ -2,13 +2,13 @@
 import * as sinon from 'sinon';
 import chai from 'chai';
 import CarModel from '../../../models/Car.model';
-import { createdCar, createdCarWithId, readCars } from '../../mocks/mockCar'
+import { createdCar, createdCarWithId, readCars, readOneCar } from '../../mocks/mockCar'
 import CarService from '../../../services/Car.service';
 const { expect } = chai;
 
 describe('Testa camada service de Car', () => {
   describe('Rota POST /cars', () => {
-    const carModel = new CarModel()
+    const carModel = new CarModel();
     const carService = new CarService(carModel);
 
     before(async () => {
@@ -22,7 +22,7 @@ describe('Testa camada service de Car', () => {
     describe('Em caso de sucesso', () => {
       it('Deve retornar um objeto', async () => {
         const newCar = await carService.create(createdCar);
-        expect(newCar).to.eql(createdCarWithId)
+        expect(newCar).to.eql(createdCarWithId);
       });
     });
 
@@ -41,7 +41,7 @@ describe('Testa camada service de Car', () => {
         try {
           await carService.create(objWithOutModel);
         } catch (error: any) {
-          expect(error.status).to.be.equal(400)
+          expect(error.status).to.be.equal(400);
         }
 
       });
@@ -49,7 +49,7 @@ describe('Testa camada service de Car', () => {
   });
 
   describe('Rota GET /cars', () => {
-    const carModel = new CarModel()
+    const carModel = new CarModel();
     const carService = new CarService(carModel);
 
     before(async () => {
@@ -61,9 +61,29 @@ describe('Testa camada service de Car', () => {
     });
 
     describe('Em caso de sucesso', () => {
-      it('Deve retornar um objeto', async () => {
+      it('Deve retornar um array', async () => {
         const cars = await carService.read();
-        expect(cars).to.eql(readCars)
+        expect(cars).to.eql(readCars);
+      });
+    });
+  });
+
+  describe('Rota GET /cars/:id', () => {
+    const carModel = new CarModel();
+    const carService = new CarService(carModel);
+
+    before(async () => {
+      sinon.stub(carModel, 'readOne').resolves(readOneCar);
+    });
+
+    after(()=>{
+      sinon.restore();
+    });
+
+    describe('Em caso de sucesso', () => {
+      it('Deve retornar um objeto', async () => {
+        const car = await carService.readOne(readOneCar._id);
+        expect(car).to.eql(readOneCar);
       });
     });
   });

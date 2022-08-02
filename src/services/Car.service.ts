@@ -10,8 +10,11 @@ export default class implements IService<ICar> {
     return this._model.create(obj);
   }
 
-  // async update(_id: string, obj: ICar): Promise<ICar | null> {
-  // }
+  async update(_id: string, obj: ICar): Promise<ICar | null> {
+    const carUpdated = await this._model.update(_id, obj);
+    if (!carUpdated) throw new Error(ErrorType.EntityNotFound);
+    return carUpdated;
+  }
 
   async read(): Promise<ICar[]> {
     return this._model.read();

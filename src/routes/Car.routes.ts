@@ -28,4 +28,11 @@ router.get(
   (req, res, next) => controller.read(req, res, next),
 );
 
+router.put(
+  '/:id',
+  validIdMongo,
+  validateBodyCar,
+  (req, res, next) => controller.updated(req, res, next),
+);
+
 export default router;
