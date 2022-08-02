@@ -8,7 +8,8 @@ import {
   readCars,
   readOneCar,
   updateCar,
-  updatedCar
+  updatedCar,
+  deleteCar
 } from '../../mocks/mockCar'
 import CarService from '../../../services/Car.service';
 const { expect } = chai;
@@ -113,5 +114,27 @@ describe('Testa camada service de Car', () => {
         expect(car).to.eql(updatedCar);
       });
     });
+  });
+
+  describe('Rota DELETE /cars/:id', () => {
+    const carModel = new CarModel();
+    const carService = new CarService(carModel);
+
+    before(async () => {
+      sinon.stub(carModel, 'delete').resolves(deleteCar);
+    });
+
+    after(()=>{
+      sinon.restore();
+    });
+
+    describe('Em caso de sucesso', () => {
+
+      it('Deve retornar um objeto', async () => {
+        const car = await carService.delete(deleteCar._id);
+        expect(car).to.eql(deleteCar);
+      });
+    });
+
   });
 });

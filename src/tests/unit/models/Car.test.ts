@@ -8,7 +8,8 @@ import {
   readCars,
   readOneCar,
   updateCar,
-  updatedCar
+  updatedCar,
+  deleteCar
 } from '../../mocks/mockCar'
 
 import CarModel from '../../../models/Car.model';
@@ -46,7 +47,7 @@ describe('Testa camada model de Car', () => {
     })
 
     describe('Em caso de sucesso', () => {
-      it('Deve criar e retornar um array com todos os cars', async () => {
+      it('Deve retornar um array com todos os cars', async () => {
         const cars = await carModel.read()
         expect(cars).to.be.eql(readCars);
       });
@@ -65,7 +66,7 @@ describe('Testa camada model de Car', () => {
     });
 
     describe('Em caso de sucesso', () => {
-      it('Deve criar e retornar um array com todos os cars', async () => {
+      it('Deve retornar um objeto', async () => {
         const car = await carModel.readOne(readOneCar._id);
         expect(car).to.be.eql(readOneCar);
       });
@@ -85,11 +86,30 @@ describe('Testa camada model de Car', () => {
     });
 
     describe('Em caso de sucesso', () => {
-      it('Deve criar e retornar um array com todos os cars', async () => {
+      it('Deve atualizar e retornar um objeto', async () => {
         const car = await carModel.update(updatedCar._id, updateCar);
         expect(car).to.be.eql(updatedCar);
       });
     });
+  });
 
+  describe('Rota DELETE /cars/:id', () => {
+    const carModel = new CarModel();
+
+    before(async () => {
+      sinon.stub(Model, 'findByIdAndDelete').resolves(deleteCar);
+    });
+
+    after(()=> {
+      sinon.restore();
+    });
+
+    describe('Em caso de sucesso', () => {
+      it('Deve deletar e retornar um objeto', async () => {
+        const car = await carModel.delete(deleteCar._id);
+        expect(car).to.be.eql(deleteCar);
+      });
+    });
+ 
   });
 });

@@ -8,7 +8,8 @@ import {
   readCars,
   readOneCar,
   updateCar,
-  updatedCar
+  updatedCar,
+  deleteCar
 } from '../../mocks/mockCar';
 import CarModel from '../../../models/Car.model';
 import CarService from '../../../services/Car.service';
@@ -75,7 +76,7 @@ describe('Testa camada controller de Car', () => {
 
     const res = {} as Response;
     const req = {} as Request;
-    
+
     before(async () => {
       req.params = { id: readOneCar._id };
       res.status = sinon.stub().returns(res);
@@ -121,4 +122,32 @@ describe('Testa camada controller de Car', () => {
       });
     });
   });
+
+  describe('Rota DELETE /cars/:id', () => {
+    const carModel = new CarModel();
+    const carService = new CarService(carModel);
+    const carController = new CarController(carService);
+
+    const res = {} as Response;
+    const req = {} as Request;
+
+    before(async () => {
+      req.params = { id: deleteCar._id };
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns({});
+      sinon.stub(carService, 'delete').resolves(deleteCar);
+    });
+
+    after(() => {
+      sinon.restore();
+    });
+
+    describe('Em caso de sucesso', () => {
+      it('Deve retornar uma resposta com status 204', async () => {
+        await carController.delete(req, res);
+        expect((res.status as Sinon.SinonStub).calledWith(204)).to.be.true;
+      });
+    });
+  });
+
 });
