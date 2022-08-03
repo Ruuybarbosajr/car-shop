@@ -3,7 +3,7 @@ import CarModel from '../models/Car.model';
 import CarService from '../services/Car.service';
 import CarController from '../controllers/Car.controller';
 import validateBodyCar from '../middleware/validateBodyCar';
-import validIdMongo from '../middleware/validateIdCar';
+import validIdMongo from '../middleware/validateId';
 
 const router = express.Router();
 
