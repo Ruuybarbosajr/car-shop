@@ -28,4 +28,10 @@ export default class {
     const motorcycles = await this._service.read();
     return res.status(200).json(motorcycles);
   }
+
+  async readOne(req: Request, res: Response) {
+    const { id } = req.params;
+    const motorcycle = await this._service.readOne(id);
+    return res.status(200).json(motorcycle);
+  }
 }

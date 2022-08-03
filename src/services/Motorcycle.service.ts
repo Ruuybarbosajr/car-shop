@@ -1,3 +1,4 @@
+import { ErrorType } from '../error/catalog';
 import { IModel } from '../interfaces/IModel';
 import { IMotorcycle } from '../interfaces/IMotorcycle';
 import { IService } from '../interfaces/IService';
@@ -18,7 +19,9 @@ export default class implements IService<IMotorcycle> {
   }
 
   async readOne(_id: string): Promise<IMotorcycle | null> {
-    return this._model.readOne(_id);
+    const findMotorcycle = await this._model.readOne(_id);
+    if (!findMotorcycle) throw new Error(ErrorType.EntityNotFound);
+    return findMotorcycle;
   }
 
   async delete(_id: string): Promise<IMotorcycle | null> {

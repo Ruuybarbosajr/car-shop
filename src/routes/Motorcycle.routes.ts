@@ -3,6 +3,7 @@ import MotorcycleModel from '../models/Motorcycle.model';
 import MotorcycleController from '../controllers/Motorcycle.controller';
 import MotorcycleService from '../services/Motorcycle.service';
 import validateBodyMotorcycle from '../middleware/validateBodyMotorcycle';
+import validIdMongo from '../middleware/validateId';
 
 const router = express.Router();
 
@@ -19,6 +20,12 @@ router.post(
 router.get(
   '/',
   (req, res) => controller.read(req, res), 
+);
+
+router.get(
+  '/:id',
+  validIdMongo,
+  (req, res) => controller.readOne(req, res), 
 );
 
 export default router;
