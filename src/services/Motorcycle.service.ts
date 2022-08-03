@@ -11,7 +11,9 @@ export default class implements IService<IMotorcycle> {
   }
 
   async update(_id: string, obj: IMotorcycle): Promise<IMotorcycle | null> {
-    return this._model.update(_id, obj);
+    const findMotorcycle = await this._model.update(_id, obj);
+    if (!findMotorcycle) throw new Error(ErrorType.EntityNotFound);
+    return findMotorcycle;
   }
 
   async read(): Promise<IMotorcycle[]> {

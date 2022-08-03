@@ -34,4 +34,28 @@ export default class {
     const motorcycle = await this._service.readOne(id);
     return res.status(200).json(motorcycle);
   }
+
+  async update(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const {
+      buyValue,
+      category,
+      color,
+      engineCapacity,
+      model,
+      year,
+    } = req.body as IMotorcycle;
+
+    const motorcycleUpdated = await this._service.update(id, {
+      buyValue,
+      category,
+      color,
+      engineCapacity,
+      model,
+      year,
+    });
+
+    return res.status(200).json(motorcycleUpdated);
+  }
 }
