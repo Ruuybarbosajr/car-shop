@@ -16,4 +16,9 @@ router.post(
   (req, res) => controller.create(req, res),
 );
 
+router.get(
+  '/',
+  (req, res) => controller.read(req, res), 
+);
+
 export default router;

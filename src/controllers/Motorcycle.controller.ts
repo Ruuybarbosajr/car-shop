@@ -23,4 +23,9 @@ export default class {
 
     return res.status(201).json(newMotorcycle);
   }
+
+  async read(_req: Request, res: Response) {
+    const motorcycles = await this._service.read();
+    return res.status(200).json(motorcycles);
+  }
 }
