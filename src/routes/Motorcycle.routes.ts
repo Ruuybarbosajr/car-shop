@@ -32,6 +32,13 @@ router.put(
   '/:id',
   validIdMongo,
   validateBodyMotorcycle,
-  (req, res) => controller.update(req, res), 
+  (req, res) => controller.update(req, res),
 );
+
+router.delete(
+  '/:id',
+  validIdMongo,
+  (req, res) => controller.delete(req, res), 
+);
+
 export default router;

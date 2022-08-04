@@ -58,4 +58,10 @@ export default class {
 
     return res.status(200).json(motorcycleUpdated);
   }
+
+  async delete(req: Request, res: Response) {
+    const { id } = req.params;
+    await this._service.delete(id);
+    return res.status(204).json({});
+  }
 }

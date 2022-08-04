@@ -11,9 +11,9 @@ export default class implements IService<IMotorcycle> {
   }
 
   async update(_id: string, obj: IMotorcycle): Promise<IMotorcycle | null> {
-    const findMotorcycle = await this._model.update(_id, obj);
-    if (!findMotorcycle) throw new Error(ErrorType.EntityNotFound);
-    return findMotorcycle;
+    const motorcycleUpdated = await this._model.update(_id, obj);
+    if (!motorcycleUpdated) throw new Error(ErrorType.EntityNotFound);
+    return motorcycleUpdated;
   }
 
   async read(): Promise<IMotorcycle[]> {
@@ -27,6 +27,8 @@ export default class implements IService<IMotorcycle> {
   }
 
   async delete(_id: string): Promise<IMotorcycle | null> {
-    return this._model.delete(_id);
+    const carDeleted = await this._model.delete(_id);
+    if (!carDeleted) throw new Error(ErrorType.EntityNotFound);
+    return carDeleted;
   }
 }
